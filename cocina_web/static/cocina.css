@@ -1,0 +1,614 @@
+/* ============================================================
+   COCINA WEB — Club Los Pocitos Azufrados
+   Diseño mobile-first optimizado para tablet/celular de cocina
+   ============================================================ */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --verde-oscuro:   #0D4020;
+  --verde-primario: #1B6E3A;
+  --verde-claro:    #D4ECD4;
+  --fondo:          #F0F4F0;
+  --blanco:         #FFFFFF;
+  --texto:          #0D1A0D;
+  --texto-sec:      #4A6A4A;
+  --acento:         #AAFF00;
+
+  --reservado-bg:   #FFF7ED;
+  --reservado-brd:  #F59E0B;
+  --reservado-txt:  #92400E;
+
+  --prep-bg:        #EFF6FF;
+  --prep-brd:       #3B82F6;
+  --prep-txt:       #1E40AF;
+
+  --listo-bg:       #F0FDF4;
+  --listo-brd:      #22C55E;
+  --listo-txt:      #14532D;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --radius:    12px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+/* ======================== HEADER ======================== */
+header {
+  background: var(--verde-oscuro);
+  color: white;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  border-bottom: 3px solid var(--acento);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo {
+  width: 36px;
+  height: 36px;
+  background: var(--acento);
+  color: var(--verde-oscuro);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+.header-sub {
+  font-size: 0.72rem;
+  color: var(--verde-claro);
+  opacity: 0.8;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+#reloj {
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--acento);
+  letter-spacing: 0.04em;
+}
+
+.refresh-badge {
+  font-size: 0.65rem;
+  color: var(--verde-claro);
+  opacity: 0.6;
+}
+
+/* ======================== STATS BAR ======================== */
+.stats-bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--blanco);
+  border-bottom: 1px solid var(--verde-claro);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.stat-pill .stat-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.stat-pill.rojo    { background: #FEF2F2; color: #DC2626; }
+.stat-pill.rojo    .stat-dot { background: #DC2626; }
+.stat-pill.naranja { background: #FFFBEB; color: #D97706; }
+.stat-pill.naranja .stat-dot { background: #D97706; }
+.stat-pill.verde   { background: #F0FDF4; color: #16A34A; }
+.stat-pill.verde   .stat-dot { background: #16A34A; }
+.stat-pill.morado  { background: #F5F3FF; color: #7C3AED; }
+.stat-pill.morado  .stat-dot { background: #7C3AED; }
+
+/* ======================== TABS ======================== */
+nav.tabs {
+  display: flex;
+  background: var(--verde-oscuro);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 13px 8px;
+  color: rgba(255,255,255,0.55);
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 0.83rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+
+.tab-btn.active {
+  color: var(--acento);
+  border-bottom-color: var(--acento);
+}
+
+.tab-count {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.tab-count.alerta {
+  background: #7C3AED;
+  color: white;
+}
+
+.tab-alerta .tab-label {
+  animation: pulsar 1.8s ease-in-out infinite;
+}
+
+@keyframes pulsar {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ======================== TAB CONTENT ======================== */
+.tab-content { display: none; padding: 14px 12px 24px; }
+.tab-content.active { display: block; }
+
+/* ======================== CARDS GRID ======================== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ======================== CARD ======================== */
+.card {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+}
+
+.card-header-strip {
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.card.reservado .card-header-strip { background: var(--reservado-bg); border-top: 4px solid var(--reservado-brd); }
+.card.en_prep   .card-header-strip { background: var(--prep-bg);      border-top: 4px solid var(--prep-brd); }
+.card.listo     .card-header-strip { background: var(--listo-bg);      border-top: 4px solid var(--listo-brd); }
+
+.estado-badge {
+  font-weight: 800;
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.estado-badge.reservado { background: var(--reservado-brd); color: white; }
+.estado-badge.en_prep   { background: var(--prep-brd);      color: white; }
+.estado-badge.listo     { background: var(--listo-brd);      color: white; }
+
+.hora-entrega {
+  font-size: 1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--texto);
+}
+
+.card-body {
+  padding: 14px 14px 10px;
+  flex: 1;
+}
+
+.cliente-nombre {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--texto);
+  margin-bottom: 6px;
+  line-height: 1.2;
+}
+
+.card-detalle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.porciones-badge {
+  background: var(--verde-primario);
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+}
+
+.tipo-almuerzo {
+  font-size: 0.88rem;
+  color: var(--texto-sec);
+  font-weight: 500;
+}
+
+.nota-card {
+  margin-top: 8px;
+  padding: 7px 10px;
+  background: #FFFBEB;
+  border-left: 3px solid #F59E0B;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.82rem;
+  color: #92400E;
+  line-height: 1.4;
+}
+
+.nota-icon { font-size: 0.85rem; }
+
+.card-actions {
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--fondo);
+}
+
+.card-actions form { margin: 0; }
+
+.btn-action {
+  width: 100%;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: filter 0.15s, transform 0.1s;
+}
+
+.btn-action:active { transform: scale(0.97); filter: brightness(0.92); }
+
+.btn-action.iniciar  { background: #F59E0B; color: white; }
+.btn-action.listo    { background: #16A34A; color: white; }
+.btn-action.entregar { background: var(--verde-primario); color: white; }
+
+/* ======================== EMPTY STATE ======================== */
+.empty-state {
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.empty-icon {
+  font-size: 2.8rem;
+  margin-bottom: 12px;
+  opacity: 0.35;
+}
+
+.empty-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texto-sec);
+  margin-bottom: 4px;
+}
+
+.empty-sub {
+  font-size: 0.85rem;
+  color: #8FAA8F;
+}
+
+/* ======================== CAPACIDAD ======================== */
+.capacidad-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #14532D;
+}
+
+.cap-icon { font-size: 1rem; }
+
+/* ======================== INVENTARIO ======================== */
+.inv-tabla {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.inv-header-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--verde-primario);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.inv-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--fondo);
+}
+
+.inv-row:last-child { border-bottom: none; }
+
+.inv-nombre {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.inv-stock {
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+  min-width: 48px;
+  text-align: center;
+}
+
+.inv-stock.critico { background: #FEE2E2; color: #DC2626; }
+.inv-stock.bajo    { background: #FEF3C7; color: #D97706; }
+.inv-stock.ok      { background: #DCFCE7; color: #15803D; }
+
+/* ======================== PRE-PRODUCCION ======================== */
+.tarea-form-card {
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.tarea-form-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--texto-sec);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+
+.tarea-form-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tarea-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--verde-claro);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: var(--fondo);
+  color: var(--texto);
+  outline: none;
+}
+
+.tarea-input:focus {
+  border-color: var(--verde-primario);
+  background: white;
+}
+
+.tarea-input-small {
+  width: 100px;
+  padding: 10px 12px;
+  border: 1.5px solid var(--verde-claro);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: var(--fondo);
+  color: var(--texto);
+  outline: none;
+}
+
+.tarea-input-small:focus {
+  border-color: var(--verde-primario);
+  background: white;
+}
+
+.btn-agregar {
+  padding: 10px 16px;
+  background: var(--verde-primario);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-agregar:active { filter: brightness(0.9); }
+
+/* ======================== LISTA DE TAREAS ======================== */
+.tareas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tarea-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--blanco);
+  border-radius: var(--radius);
+  padding: 13px 14px;
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid #F59E0B;
+}
+
+.tarea-row.tarea-hecha {
+  border-left-color: #16A34A;
+  opacity: 0.72;
+}
+
+.tarea-check {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #D1D5DB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  color: transparent;
+}
+
+.tarea-check.checked {
+  background: #16A34A;
+  border-color: #16A34A;
+  color: white;
+}
+
+.tarea-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tarea-desc {
+  font-weight: 600;
+  font-size: 0.92rem;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.tarea-row.tarea-hecha .tarea-desc {
+  text-decoration: line-through;
+  color: #9CA3AF;
+}
+
+.tarea-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tarea-cant {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--verde-primario);
+}
+
+.tarea-hora {
+  font-size: 0.75rem;
+  color: #9CA3AF;
+}
+
+.btn-tarea {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-tarea.completar { background: #16A34A; color: white; }
+.btn-tarea.desmarcar { background: #E5E7EB; color: #4B5563; }
+.btn-tarea:active    { filter: brightness(0.9); }
+.btn-tarea:disabled  { opacity: 0.6; cursor: not-allowed; }
+
+.btn-action:disabled { opacity: 0.65; cursor: not-allowed; }
+.btn-agregar:disabled { opacity: 0.65; cursor: not-allowed; }
+
+form { margin: 0; }
+
+/* ======================== URGENTE ======================== */
+.card.urgente {
+  box-shadow: 0 0 0 2px #DC2626, var(--shadow-md);
+}
+
+.card.urgente .hora-entrega {
+  color: #DC2626;
+  animation: pulsar 1.2s ease-in-out infinite;
+}
+
+.card.urgente .card-header-strip::after {
+  content: 'TARDE';
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  color: white;
+  background: #DC2626;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+}

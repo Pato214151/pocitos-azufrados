@@ -1,0 +1,15 @@
+# Requiere Python 3.9+
+bcrypt>=4.0.0
+matplotlib>=3.5.0
+reportlab>=3.6.0
+openpyxl>=3.1.0
+flask>=3.0.0
+waitress>=2.1.0
+python-escpos>=3.0
+pywin32>=306
+
+# Las siguientes dependencias no se detectaron en uso activo (2026-03-22).
+# Descomentar si se reincorporan las funcionalidades correspondientes:
+# requests>=2.28.0       # Sin uso detectado (posible feature futuro de sincronización)
+# Pillow>=9.0.0          # Sin uso detectado (posible manejo de imágenes futuro)
+# python-barcode>=0.15.1 # Sin uso detectado (generación de códigos de barras futura)

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Cocina — Pocitos Azufrados</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='cocina.css') }}">
+</head>
+<body>
+
+<!-- ======================== HEADER ======================== -->
+<header>
+  <div class="header-left">
+    <span class="header-logo">PA</span>
+    <div>
+      <div class="header-title">Pocitos Azufrados</div>
+      <div class="header-sub">Panel de Cocina</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span id="reloj">{{ hora }}</span>
+    <span class="refresh-badge" id="countdown-badge">&#8635; {{ refresh_interval }}s</span>
+  </div>
+</header>
+
+<!-- ======================== STATS ======================== -->
+<div class="stats-bar">
+  <div class="stat-pill rojo">
+    <span class="stat-dot"></span>
+    <span>{{ stats.alm_reservados }} Reservados</span>
+  </div>
+  <div class="stat-pill naranja">
+    <span class="stat-dot"></span>
+    <span>{{ stats.alm_preparando }} Preparando</span>
+  </div>
+  <div class="stat-pill verde">
+    <span class="stat-dot"></span>
+    <span>{{ stats.alm_listos }} Listos</span>
+  </div>
+  {% if tareas_pendientes > 0 %}
+  <div class="stat-pill morado">
+    <span class="stat-dot"></span>
+    <span>{{ tareas_pendientes }} Tareas</span>
+  </div>
+  {% endif %}
+</div>
+
+<!-- ======================== TABS ======================== -->
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="almuerzos" onclick="mostrarTab('almuerzos', this)">
+    <span class="tab-label">Almuerzos</span>
+    <span class="tab-count">{{ stats.almuerzos }}</span>
+  </button>
+  <button class="tab-btn" data-tab="inventario" onclick="mostrarTab('inventario', this)">
+    <span class="tab-label">Inventario</span>
+  </button>
+  <button class="tab-btn{% if tareas_pendientes > 0 %} tab-alerta{% endif %}"
+          id="tab-btn-preproduccion"
+          data-tab="preproduccion"
+          onclick="mostrarTab('preproduccion', this)">
+    <span class="tab-label">Preproduccion</span>
+    {% if tareas_pendientes > 0 %}<span class="tab-count alerta">{{ tareas_pendientes }}</span>{% endif %}
+  </button>
+</nav>
+
+<!-- ======================== ALMUERZOS ======================== -->
+<div id="tab-almuerzos" class="tab-content active">
+
+  {% if capacidad %}
+  <div class="capacidad-banner">
+    <span class="cap-icon">&#9998;</span>
+    Capacidad disponible: <strong>{{ capacidad }} porciones</strong>
+  </div>
+  {% endif %}
+
+  {% if not almuerzos %}
+  <div class="empty-state">
+    <div class="empty-icon">&#9749;</div>
+    <div class="empty-text">Sin pedidos activos</div>
+    <div class="empty-sub">Cuando lleguen pedidos apareceran aqui</div>
+  </div>
+  {% else %}
+  <div class="cards-grid">
+    {% for alm in almuerzos %}
+    {% if alm.estado == 'RESERVADO' %}{% set cls = 'reservado' %}{% set cls_label = 'RESERVADO' %}
+    {% elif alm.estado == 'EN_PREPARACION' %}{% set cls = 'en_prep' %}{% set cls_label = 'EN PREPARACION' %}
+    {% else %}{% set cls = 'listo' %}{% set cls_label = 'LISTO' %}{% endif %}
+
+    <div class="card {{ cls }}{% if alm.urgente %} urgente{% endif %}">
+      <div class="card-header-strip">
+        <span class="estado-badge {{ cls }}">{{ cls_label }}</span>
+        <span class="hora-entrega">
+          {% if alm.hora_entrega %}{{ alm.hora_entrega[:5] }}{% endif %}
+        </span>
+      </div>
+      <div class="card-body">
+        <div class="cliente-nombre">{{ alm.cliente_nombre }}</div>
+        <div class="card-detalle">
+          <span class="porciones-badge">{{ alm.cantidad_almuerzos }} porc.</span>
+          <span class="tipo-almuerzo">{{ alm.tipo_almuerzo or '' }}</span>
+        </div>
+        {% if alm.notas %}
+        <div class="nota-card">
+          <span class="nota-icon">&#9888;</span> {{ alm.notas }}
+        </div>
+        {% endif %}
+      </div>
+      <div class="card-actions">
+        {% if alm.estado == 'RESERVADO' %}
+        <form method="post" action="/accion_almuerzo">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="id_reserva" value="{{ alm.id_reserva }}">
+          <input type="hidden" name="nuevo_estado" value="EN_PREPARACION">
+          <button type="submit" class="btn-action iniciar" onclick="_onBtnAccion(this,'Iniciando...')">Iniciar Preparacion</button>
+        </form>
+        {% elif alm.estado == 'EN_PREPARACION' %}
+        <form method="post" action="/accion_almuerzo">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="id_reserva" value="{{ alm.id_reserva }}">
+          <input type="hidden" name="nuevo_estado" value="LISTO">
+          <button type="submit" class="btn-action listo" onclick="_onBtnAccion(this,'Marcando...')">Listo para Entregar</button>
+        </form>
+        {% elif alm.estado == 'LISTO' %}
+        <form method="post" action="/accion_almuerzo">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="id_reserva" value="{{ alm.id_reserva }}">
+          <input type="hidden" name="nuevo_estado" value="ENTREGADO">
+          <button type="submit" class="btn-action entregar" onclick="_onBtnAccion(this,'Entregando...')">Marcar Entregado</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- ======================== INVENTARIO ======================== -->
+<div id="tab-inventario" class="tab-content">
+  {% if not inventario %}
+  <div class="empty-state">
+    <div class="empty-icon">&#128230;</div>
+    <div class="empty-text">Sin productos de cocina</div>
+  </div>
+  {% else %}
+  <div class="inv-tabla">
+    <div class="inv-header-row">
+      <span>Producto</span>
+      <span>Stock</span>
+    </div>
+    {% for item in inventario %}
+    {% set cls = 'critico' if item.stock_actual < 5 else 'bajo' if item.stock_actual < 10 else 'ok' %}
+    <div class="inv-row">
+      <span class="inv-nombre">{{ item.nombre }}</span>
+      <span class="inv-stock {{ cls }}">{{ item.stock_actual }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<!-- ======================== PRE-PRODUCCION ======================== -->
+<div id="tab-preproduccion" class="tab-content">
+
+  <div class="tarea-form-card">
+    <div class="tarea-form-title">Nueva tarea para hoy</div>
+    <form method="post" action="/api/tarea_nueva" class="tarea-form-row">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="text" name="descripcion" placeholder="Ej: Descongelar lomo..." required class="tarea-input">
+      <input type="text" name="cantidad" placeholder="Cantidad" class="tarea-input-small">
+      <button type="submit" class="btn-agregar" onclick="salvarTab()">+ Agregar</button>
+    </form>
+  </div>
+
+  {% if not tareas %}
+  <div class="empty-state">
+    <div class="empty-icon">&#10003;</div>
+    <div class="empty-text">Sin tareas para hoy</div>
+    <div class="empty-sub">Usa el formulario de arriba para agregar</div>
+  </div>
+  {% else %}
+  <div class="tareas-lista">
+    {% for tarea in tareas %}
+    <div class="tarea-row {{ 'tarea-hecha' if tarea.completada else '' }}">
+      <div class="tarea-check {{ 'checked' if tarea.completada else '' }}">
+        {% if tarea.completada %}&#10003;{% endif %}
+      </div>
+      <div class="tarea-info">
+        <span class="tarea-desc">{{ tarea.descripcion }}</span>
+        <div class="tarea-meta">
+          {% if tarea.cantidad %}<span class="tarea-cant">{{ tarea.cantidad }}</span>{% endif %}
+          {% if tarea.completada and tarea.hora_completado %}
+          <span class="tarea-hora">Completado {{ tarea.hora_completado[11:16] }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <form method="post" action="/api/tarea_completar">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="id_tarea" value="{{ tarea.id_tarea }}">
+        <input type="hidden" name="completada" value="{{ '0' if tarea.completada else '1' }}">
+        <button type="submit" class="{{ 'btn-tarea desmarcar' if tarea.completada else 'btn-tarea completar' }}"
+              onclick="_onBtnAccion(this)">
+          {{ 'Desmarcar' if tarea.completada else 'Listo' }}
+        </button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+<script>
+// ── Tabs ─────────────────────────────────────────────────────────
+function mostrarTab(nombre, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + nombre).classList.add('active');
+  btn.classList.add('active');
+}
+
+function salvarTab() {
+  var active = document.querySelector('.tab-btn.active');
+  if (active && active.dataset.tab) sessionStorage.setItem('cocina_tab', active.dataset.tab);
+}
+
+(function _restoreTab() {
+  var saved = sessionStorage.getItem('cocina_tab');
+  if (saved) {
+    sessionStorage.removeItem('cocina_tab');
+    var btn = document.querySelector('[data-tab="' + saved + '"]');
+    if (btn) { mostrarTab(saved, btn); return; }
+  }
+  if (window.location.hash === '#tab-preproduccion') {
+    var btn2 = document.getElementById('tab-btn-preproduccion');
+    if (btn2) mostrarTab('preproduccion', btn2);
+  }
+})();
+
+// ── Proteccion doble-tap ─────────────────────────────────────────
+function _onBtnAccion(btn, label) {
+  salvarTab();
+  setTimeout(function() {
+    btn.disabled = true;
+    btn.textContent = label || '...';
+    btn.style.opacity = '0.65';
+  }, 80);
+}
+
+// ── Reloj ────────────────────────────────────────────────────────
+setInterval(function() {
+  var now = new Date();
+  document.getElementById('reloj').textContent =
+    String(now.getHours()).padStart(2,'0') + ':' +
+    String(now.getMinutes()).padStart(2,'0') + ':' +
+    String(now.getSeconds()).padStart(2,'0');
+}, 1000);
+
+// ── Countdown y auto-refresh ─────────────────────────────────────
+var _cdTotal = {{ refresh_interval }};
+var _cd = _cdTotal;
+var _cdEl = document.getElementById('countdown-badge');
+
+setInterval(function() {
+  _cd--;
+  if (_cdEl) _cdEl.textContent = '\u21BB ' + (_cd > 0 ? _cd : 0) + 's';
+  if (_cd <= 0) {
+    salvarTab();
+    window.location.reload();
+  }
+}, 1000);
+</script>
+</body>
+</html>
