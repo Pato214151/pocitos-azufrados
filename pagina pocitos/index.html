@@ -1243,5 +1243,41 @@
   mostrarPagina('nosotros');
 </script>
 
+<!-- Sello "Hecho por Ducklab" — marca de agua fija abajo-izquierda -->
+<a
+  href="https://mi-pagina-web-two-lilac.vercel.app"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Hecho por Ducklab"
+  style="
+    position: fixed;
+    left: 14px;
+    bottom: 14px;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px 5px 5px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    transition: transform 0.2s ease, background 0.2s ease;
+  "
+  onmouseover="this.style.transform='translateY(-2px)'; this.style.background='rgba(0,0,0,0.75)';"
+  onmouseout="this.style.transform='translateY(0)'; this.style.background='rgba(0,0,0,0.55)';"
+>
+  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ef4444,#b91c1c);">
+    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" aria-hidden="true">
+      <ellipse cx="12.6" cy="15.4" rx="7.6" ry="4.2" fill="#ffffff" />
+      <circle cx="8.4" cy="9.4" r="4.5" fill="#ffffff" />
+      <path d="M12 7.7 L18.6 8.4 c0.9 0.1 0.9 1.3 0 1.4 L12 10.7 Z" fill="#ffffff" />
+      <circle cx="9.7" cy="8.6" r="1.05" fill="#8a1212" />
+    </svg>
+  </span>
+  <span style="font-size:11px;font-weight:600;letter-spacing:0.02em;color:#fff;">Ducklab</span>
+</a>
+
 </body>
 </html>
