@@ -22,6 +22,7 @@ METODOS_PAGO = ['EFECTIVO', 'NEQUI', 'DAVIPLATA', 'BANCOLOMBIA', 'TRANSFERENCIA'
 
 
 class SociosModule:
+    """Pantalla de socios: ficha, cuotas mensuales e historial de pagos."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -33,6 +34,7 @@ class SociosModule:
     # ─── UI ───────────────────────────────────────────────────────────────────
 
     def _crear_interfaz(self):
+        """Arma la pantalla: lista de socios, KPIs y panel de detalle."""
         # Header
         header = tk.Frame(self.parent, bg=COLORES['primario'])
         header.pack(fill='x')
@@ -133,6 +135,7 @@ class SociosModule:
                  bg=COLORES['fondo_card']).pack(expand=True)
 
     def _render_detalle(self, socio):
+        """Muestra la ficha y las cuotas del socio elegido."""
         for w in self.right.winfo_children():
             w.destroy()
 
@@ -367,6 +370,7 @@ class SociosModule:
         self._dialogo_socio(socio)
 
     def _dialogo_socio(self, socio):
+        """Formulario para crear o editar un socio."""
         es_nuevo = socio is None
         dlg = tk.Toplevel(self.parent)
         dlg.title("Nuevo Socio" if es_nuevo else "Editar Socio")
@@ -492,6 +496,7 @@ class SociosModule:
         self._cargar_socios()
 
     def _registrar_pago(self, socio):
+        """Registra el pago de una cuota."""
         hoy = datetime.date.today()
         dlg = tk.Toplevel(self.parent)
         dlg.title("Registrar Pago de Membresia")

@@ -16,6 +16,7 @@ from utils.tema_corporativo import COLORES, FUENTES
 
 
 class InventarioCategoriasModule:
+    """Pestañas de Productos y Categorías en un solo panel."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

@@ -52,6 +52,7 @@ def _format_money(valor):
 
 
 def _recibos_dir():
+    """Carpeta data/recibos (la crea si no existe)."""
     ruta = os.path.join(BASE_DIR, "data", "recibos")
     os.makedirs(ruta, exist_ok=True)
     return ruta
@@ -112,6 +113,7 @@ def _abrir_pdf(ruta):
 
 
 def _verificar_reportlab():
+    """Avisa claramente si falta la librería ReportLab."""
     if not REPORTLAB_OK:
         raise ImportError(
             "ReportLab no está instalado.\n"

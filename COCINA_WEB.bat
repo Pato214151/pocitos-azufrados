@@ -1,4 +1,5 @@
 @echo off
+REM Abre el servidor de cocina para verla desde el celular o tablet en la red WiFi.
 title Cocina Web - Los Pocitos Azufrados
 echo.
 echo  Iniciando servidor de cocina para celular/tablet...

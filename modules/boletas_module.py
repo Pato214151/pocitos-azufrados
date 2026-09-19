@@ -19,6 +19,7 @@ from utils.printing import imprimir_recibo_boleta
 
 
 class BoletasModule:
+    """Pantalla de venta de boletas de entrada al balneario."""
     PRECIO_PERSONA = 35000  # Valor fallback; se sobreescribe desde tabla configuracion
 
     def __init__(self, parent, usuario):

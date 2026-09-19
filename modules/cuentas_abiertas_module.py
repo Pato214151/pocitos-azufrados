@@ -75,6 +75,7 @@ class CuentasAbiertasModule:
     # ── Interfaz ─────────────────────────────────────────────────────────────
 
     def _crear_interfaz(self):
+        """Arma la pantalla: KPIs, empleados/consumos a la izquierda y detalle a la derecha."""
         self.parent.configure(bg=COLORES['fondo'])
 
         hdr = tk.Frame(self.parent, bg=COLORES['primario'], pady=10)
@@ -114,6 +115,7 @@ class CuentasAbiertasModule:
         return lbl
 
     def _panel_izq(self, parent):
+        """Lista de consumos abiertos por empleado."""
         frame = tk.Frame(parent, bg=COLORES['fondo_card'], relief='solid', bd=1)
         frame.grid(row=0, column=0, sticky='nsew', padx=(0, 6))
         frame.rowconfigure(2, weight=1)
@@ -173,6 +175,7 @@ class CuentasAbiertasModule:
         self.tree_cerrados.grid(row=4, column=0, sticky='nsew', padx=(4, 0), pady=(0, 6))
 
     def _panel_der(self, parent):
+        """Detalle del consumo seleccionado."""
         frame = tk.Frame(parent, bg=COLORES['fondo_card'], relief='solid', bd=1)
         frame.grid(row=0, column=1, sticky='nsew')
         frame.rowconfigure(2, weight=1)
@@ -334,6 +337,7 @@ class CuentasAbiertasModule:
     # ── Acciones ─────────────────────────────────────────────────────────────
 
     def _nueva_tab(self):
+        """Abre un consumo nuevo para un empleado."""
         if not self.empleados:
             messagebox.showwarning("Sin empleados",
                 "No hay empleados registrados.\n"
@@ -394,6 +398,7 @@ class CuentasAbiertasModule:
         crear_boton(btn_row, "Cancelar",   dlg.destroy, tipo='secundario').pack(side='left')
 
     def _agregar_empleado(self):
+        """Registra un empleado nuevo."""
         dlg = tk.Toplevel(self.parent)
         dlg.title("Nuevo empleado")
         dlg.geometry("340x170")
@@ -438,6 +443,7 @@ class CuentasAbiertasModule:
         crear_boton(btn_row, "Cancelar", dlg.destroy, tipo='secundario').pack(side='left')
 
     def _agregar_item(self):
+        """Agrega productos al consumo (descuenta inventario)."""
         if not self._id_consumo_sel:
             return
         try:

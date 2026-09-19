@@ -208,6 +208,9 @@ def _obtener_tareas_hoy(conn):
 
 
 def _obtener_datos():
+    """Pedidos, almuerzos, inventario y estadísticas para la pantalla de cocina.
+    Se cachea unos segundos para que varios celulares no saturen la base.
+    """
     now = _time.monotonic()
     if _datos_cache['value'] is not None and now - _datos_cache['ts'] < _DATOS_TTL:
         return _datos_cache['value']
@@ -224,6 +227,7 @@ def _invalidar_cache_datos():
 
 
 def _obtener_datos_conn(conn):
+    """Hace las consultas de _obtener_datos con una conexión ya abierta."""
 
     # Pedidos de venta
     pedidos_raw = conn.execute("""
@@ -342,6 +346,7 @@ def _obtener_datos_conn(conn):
 @app.route('/')
 @_require_auth
 def index():
+    """Pantalla principal de cocina (se refresca sola en el navegador)."""
     try:
         pedidos, almuerzos, inventario, capacidad, stats = _obtener_datos()
         with conexion_segura() as conn:
@@ -370,6 +375,7 @@ def index():
 @_require_auth
 @_require_csrf
 def accion():
+    """Cambia el estado de uno o varios pedidos (PREPARANDO → LISTO → ENTREGADO)."""
     _ESTADOS_VALIDOS = ('PREPARANDO', 'LISTO', 'ENTREGADO')
     ids_str    = request.form.get('ids', '')
     nuevo      = request.form.get('nuevo_estado', '')
@@ -426,6 +432,7 @@ def accion():
 @_require_auth
 @_require_csrf
 def accion_almuerzo():
+    """Cambia el estado de una reserva de almuerzo."""
     _ESTADOS_ALMUERZO_VALIDOS = ('RESERVADO', 'EN_PREPARACION', 'LISTO', 'ENTREGADO', 'CANCELADO')
     id_reserva = request.form.get('id_reserva')
     nuevo      = request.form.get('nuevo_estado', '').strip().upper()

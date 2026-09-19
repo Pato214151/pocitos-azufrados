@@ -13,6 +13,7 @@ from utils.tema_corporativo import COLORES, FUENTES
 
 
 class ConfigUsuariosModule:
+    """Pestañas de Configuración y Usuarios en un solo panel."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

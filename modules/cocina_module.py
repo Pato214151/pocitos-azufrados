@@ -19,6 +19,7 @@ from database.connection import get_connection, conexion_segura
 
 
 class CocinaModule:
+    """Pantalla de cocina en el PC: pedidos y almuerzos, con refresco automático."""
     REFRESH_MS = 10000  # 10 segundos
 
     NOTIF_MS = 5000   # polling de listos cada 5 s
@@ -39,6 +40,7 @@ class CocinaModule:
     # ──────────────────────────────────────────────────────────────────────
 
     def _crear_interfaz(self):
+        """Arma las pestañas de pedidos, almuerzos e inventario de cocina."""
         # ── Header ───────────────────────────────────────────────────────
         header = tk.Frame(self.parent, bg=COLORES['primario'])
         header.pack(fill='x')
@@ -314,6 +316,7 @@ class CocinaModule:
     # ──────────────────────────────────────────────────────────────────────
 
     def _crear_tarjeta_pedido(self, parent, grupo, fila, columna):
+        """Tarjeta de un pedido con sus productos y botones de estado."""
         items  = grupo['items']
         venta  = grupo['venta_info']
         estados = [i['estado'] for i in items]
@@ -389,6 +392,7 @@ class CocinaModule:
                         tipo=tipo).pack(fill='x', pady=(6, 0))
 
     def _crear_tarjeta_almuerzo(self, parent, alm, checklist=None):
+        """Tarjeta de una reserva de almuerzo con botones de estado."""
         estilos = {
             'RESERVADO':      {'bg': COLORES['cocina_pendiente'],  'border': '#FF9800', 'label': 'RESERVADO'},
             'EN_PREPARACION': {'bg': COLORES['cocina_preparando'], 'border': '#2196F3', 'label': 'EN PREPARACION'},

@@ -31,6 +31,7 @@ def _leer_metodos_pago():
 
 
 class PagosModule:
+    """Pantalla de pagos de cuentas abiertas (parciales o completos)."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

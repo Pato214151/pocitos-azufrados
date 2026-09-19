@@ -55,6 +55,7 @@ class ReporteErroresModule:
     # ── Interfaz ─────────────────────────────────────────────────────────────
 
     def _crear_interfaz(self):
+        """Arma las pestañas: nuevo reporte, historial y configuración de correo."""
         self.parent.configure(bg=COLORES['fondo'])
 
         hdr = tk.Frame(self.parent, bg=COLORES['primario'], pady=10)
@@ -84,6 +85,7 @@ class ReporteErroresModule:
     # ── Tab: Nuevo reporte ───────────────────────────────────────────────────
 
     def _tab_nuevo(self, parent):
+        """Formulario para describir el error y adjuntar una captura."""
         canvas = tk.Canvas(parent, bg=COLORES['fondo'], highlightthickness=0)
         sb = ttk.Scrollbar(parent, orient='vertical', command=canvas.yview)
         canvas.configure(yscrollcommand=sb.set)
@@ -195,6 +197,7 @@ class ReporteErroresModule:
     # ── Tab: Historial ───────────────────────────────────────────────────────
 
     def _tab_historial(self, parent):
+        """Lista de reportes enviados."""
         toolbar = tk.Frame(parent, bg=COLORES['fondo'], pady=6)
         toolbar.pack(fill='x', padx=10)
         crear_boton(toolbar, "Actualizar", self._cargar_reportes,
@@ -225,6 +228,7 @@ class ReporteErroresModule:
     # ── Tab: Configuración correo ────────────────────────────────────────────
 
     def _tab_config(self, parent):
+        """Configuración SMTP para enviar los reportes."""
         frame = tk.Frame(parent, bg=COLORES['fondo'], padx=20, pady=16)
         frame.pack(fill='both', expand=True)
 

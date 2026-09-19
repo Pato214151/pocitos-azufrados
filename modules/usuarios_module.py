@@ -23,6 +23,7 @@ except ImportError:
 
 
 class UsuariosModule:
+    """Pantalla de usuarios del sistema: crear, editar, PIN y desactivar (solo admin)."""
     ROLES = ['administrador', 'cajero', 'vendedor', 'contadora']
     _MIN_PASSWORD_LEN = 8
 

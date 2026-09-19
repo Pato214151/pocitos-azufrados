@@ -23,6 +23,9 @@ from database.connection import conexion_segura
 
 
 class Dashboard:
+    """Ventana principal del administrador: menú lateral con todos los módulos,
+    KPIs del día y bloqueo automático por inactividad.
+    """
     def __init__(self, login_root, usuario_data):
         self.login_root = login_root
         self.usuario = usuario_data
@@ -1023,6 +1026,7 @@ class Dashboard:
         self._programar_verificacion_bloqueo()
 
     def _bloquear_pantalla(self):
+        """Bloquea la pantalla tras un tiempo sin uso; se desbloquea con PIN."""
         if self._bloqueo_activo:
             return
         self._bloqueo_activo = True

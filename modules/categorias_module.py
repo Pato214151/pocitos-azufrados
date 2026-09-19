@@ -16,6 +16,7 @@ from database.connection import get_connection, conexion_segura
 
 
 class CategoriasModule:
+    """Pantalla de categorías, subcategorías y productos."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

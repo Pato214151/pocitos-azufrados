@@ -18,6 +18,7 @@ _log = logging.getLogger("pocitos")
 
 
 class CajaModule:
+    """Pantalla de caja diaria: abrir, registrar movimientos y cerrar con arqueo."""
     def __init__(self, parent, usuario, callback_ir_bar=None):
         self.parent = parent
         self.usuario = usuario

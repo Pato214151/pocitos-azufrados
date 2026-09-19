@@ -28,6 +28,7 @@ errores = []
 advertencias = []
 
 def conn_new():
+    """Conexión nueva a la base con claves foráneas y WAL."""
     c = sqlite3.connect(DB)
     c.row_factory = sqlite3.Row
     c.execute("PRAGMA foreign_keys=ON")
@@ -35,6 +36,7 @@ def conn_new():
     return c
 
 def siguiente_numero_venta(conn):
+    """Toma el siguiente número de la serie de ventas."""
     s = conn.execute("SELECT * FROM series_facturacion WHERE activa=1").fetchone()
     n = s['consecutivo_actual'] + 1
     num = s['formato'].format(prefijo=s['prefijo'], ano=s['ano'], consecutivo=n)
@@ -43,6 +45,7 @@ def siguiente_numero_venta(conn):
     return num
 
 def siguiente_numero_boleta(conn):
+    """Toma el siguiente número de la serie de boletas."""
     s = conn.execute("SELECT * FROM series_boletas WHERE activa=1").fetchone()
     if not s:
         return None
@@ -53,6 +56,7 @@ def siguiente_numero_boleta(conn):
     return num
 
 def check(condicion, descripcion, critico=False):
+    """Imprime ✓/✗ y guarda el fallo como error o advertencia."""
     if condicion:
         print(f"  {PASS} {descripcion}")
         return True
@@ -65,6 +69,7 @@ def check(condicion, descripcion, critico=False):
         return False
 
 def seccion(titulo):
+    """Imprime el título de una sección del reporte."""
     print(f"\n{'='*55}")
     print(f"  {titulo}")
     print(f"{'='*55}")

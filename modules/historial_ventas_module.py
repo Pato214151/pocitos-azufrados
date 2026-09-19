@@ -1,3 +1,10 @@
+"""
+Módulo de Historial de Ventas - Club Los Pocitos Azufrados
+Busca y filtra ventas pasadas (hoy, ayer, esta semana, este mes), muestra KPIs del
+período y el detalle de cada venta. Permite reimprimir el recibo y anular
+(con motivo; las de más de $50.000 piden PIN de admin). Paginado de a 50.
+"""
+
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import os, sys, datetime

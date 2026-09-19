@@ -16,6 +16,7 @@ from utils.logger import log_auditoria
 
 
 class ClientesModule:
+    """Pantalla de clientes: lista a la izquierda y ficha a la derecha."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -29,6 +30,7 @@ class ClientesModule:
     # INTERFAZ
     # ------------------------------------------------------------------
     def _crear_interfaz(self):
+        """Arma la pantalla: KPIs, buscador, tabla y panel de ficha."""
         # Header
         header = tk.Frame(self.parent, bg=COLORES['primario'])
         header.pack(fill='x')
@@ -192,6 +194,7 @@ class ClientesModule:
     # FICHA
     # ------------------------------------------------------------------
     def _mostrar_ficha(self, cliente):
+        """Muestra los datos, historial de compras y saldo del cliente elegido."""
         for w in self.right.winfo_children():
             w.destroy()
 
@@ -322,6 +325,7 @@ class ClientesModule:
         self._abrir_form(cliente)
 
     def _abrir_form(self, cliente=None):
+        """Formulario para crear o editar un cliente."""
         es_nuevo = cliente is None
         titulo = "Nuevo Cliente" if es_nuevo else f"Editar: {cliente['nombre']}"
 

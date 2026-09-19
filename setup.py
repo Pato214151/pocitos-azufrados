@@ -835,6 +835,7 @@ def _generar_password_temporal():
 
 
 def _hashear(contrasena):
+    """Hash de una contraseña con bcrypt (o SHA-256 si bcrypt no está instalado)."""
     if BCRYPT_DISPONIBLE:
         return bcrypt.hashpw(contrasena.encode('utf-8'), bcrypt.gensalt(12)).decode('utf-8')
     return hashlib.sha256(contrasena.encode()).hexdigest()
@@ -949,6 +950,7 @@ def mostrar_resumen():
 
 
 def main():
+    """Instalación completa: carpetas, base de datos, datos iniciales, usuarios y productos."""
     print()
     print("╔══════════════════════════════════════════════════╗")
     print("║   🏖️  CLUB LOS POCITOS AZUFRADOS               ║")

@@ -28,6 +28,7 @@ _COLUMNAS_FECHA_PERMITIDAS = {'fecha_creacion', 'fecha', 'fecha_inicio', 'fecha_
 
 
 class ConfigModule:
+    """Pantalla de configuración del sistema (solo admin)."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

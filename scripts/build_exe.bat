@@ -1,4 +1,5 @@
 @echo off
+REM Genera el .exe detectando Python e instalando lo necesario para el build.
 cd /d "%~dp0\.."
 echo ============================================================
 echo   Los Pocitos Azufrados - Generador de EXE

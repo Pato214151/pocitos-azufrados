@@ -15,6 +15,7 @@ from database.connection import conexion_segura
 
 
 class DashboardCajero:
+    """Ventana principal del cajero: solo los módulos operativos del turno."""
     def __init__(self, root, usuario):
         self.root = root
         self.usuario = usuario
@@ -425,6 +426,7 @@ class DashboardCajero:
         self._programar_verificacion_bloqueo()
 
     def _bloquear_pantalla(self):
+        """Bloquea la pantalla tras un tiempo sin uso; se desbloquea con PIN."""
         if self._bloqueo_activo:
             return
         self._bloqueo_activo = True

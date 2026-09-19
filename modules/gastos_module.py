@@ -44,6 +44,7 @@ def _leer_config_gastos():
 
 
 class GastosModule:
+    """Pantalla de registro y consulta de gastos."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

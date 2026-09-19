@@ -1,4 +1,5 @@
 @echo off
+REM Genera el ejecutable con PyInstaller (pocitos.spec) y copia la carpeta data.
 cd /d "%~dp0\.."
 echo Cerrando ejecutable si esta abierto...
 taskkill /F /IM PocitosAzufrados.exe >nul 2>&1

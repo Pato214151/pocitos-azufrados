@@ -34,6 +34,9 @@ from utils.tema_corporativo import COLORES, FUENTES, crear_boton
 
 
 class LoginWindow:
+    """Ventana de inicio de sesión (usuario + contraseña o PIN). Según el rol
+    abre el dashboard de admin, cajero o contadora.
+    """
     MAX_INTENTOS = 5
     TIEMPO_BLOQUEO = 1800  # segundos (30 minutos)
 

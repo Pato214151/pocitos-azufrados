@@ -1,4 +1,6 @@
 @echo off
+REM Instalación en el PC del club: busca Python, instala dependencias y crea
+REM la base de datos (setup.py).
 echo ============================================
 echo   CLUB LOS POCITOS AZUFRADOS
 echo   Instalacion del Sistema POS

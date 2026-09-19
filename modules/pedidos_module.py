@@ -18,6 +18,7 @@ from utils.logger import log_auditoria
 
 
 class PedidosModule:
+    """Pantalla de pedidos de almuerzos/comidas con filtros por estado."""
     REFRESH_MS = 15000  # 15 segundos
     ESTADOS = ['RESERVADO', 'EN_PREPARACION', 'LISTO', 'ENTREGADO', 'CANCELADO']
 

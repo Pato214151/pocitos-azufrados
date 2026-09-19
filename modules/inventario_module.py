@@ -28,6 +28,7 @@ except ImportError:
 
 
 class InventarioModule:
+    """Pantalla de inventario: stock, entradas/salidas, variantes y alertas de mínimo."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

@@ -20,6 +20,7 @@ TIPO_TURNO  = ['Normal', 'Festivo']
 
 
 class NominaModule:
+    """Pantalla de nómina semanal: turnos por empleado y pago."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -32,6 +33,7 @@ class NominaModule:
 
     # ─── UI ───────────────────────────────────────────────────────────────────
     def _crear_interfaz(self):
+        """Arma la pantalla: selector de semana, empleados y grilla de turnos."""
         # Header
         header = tk.Frame(self.parent, bg=COLORES['primario'])
         header.pack(fill='x')
@@ -267,6 +269,7 @@ class NominaModule:
 
     # ─── Selección y edición ──────────────────────────────────────────────────
     def _on_select(self, event=None):
+        """Carga los turnos de la semana del empleado elegido."""
         sel = self.tree.selection()
         if not sel:
             self._empleado_sel = None
@@ -411,6 +414,7 @@ class NominaModule:
             messagebox.showerror("Error", str(e))
 
     def _editar_tarifas(self):
+        """Diálogo para cambiar las tarifas por turno."""
         if not self._empleado_sel:
             messagebox.showwarning("Seleccione", "Seleccione un empleado primero")
             return

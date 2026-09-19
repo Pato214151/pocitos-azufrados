@@ -18,6 +18,7 @@ from utils.logger import log_auditoria
 
 
 class ContingenciaModule:
+    """Registro de ventas hechas en talonario durante una falla del sistema."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -33,6 +34,7 @@ class ContingenciaModule:
     # ─────────────────────────────────────────────────────────────────
 
     def _build_ui(self):
+        """Arma la pantalla: aviso, formulario e historial."""
         self.parent.config(bg=COLORES['fondo'])
 
         # Header
@@ -72,6 +74,7 @@ class ContingenciaModule:
                  wraplength=700, justify='left').pack(padx=12, pady=8)
 
     def _build_form(self, parent):
+        """Formulario para capturar una venta de talonario."""
         card = tk.Frame(parent, bg=COLORES['fondo_card'],
                         highlightbackground=COLORES['borde'], highlightthickness=1)
         card.pack(fill='x', padx=16, pady=8)
@@ -211,6 +214,7 @@ class ContingenciaModule:
         crear_boton(total_f, "Registrar Venta", self._registrar_venta, tipo='exito').pack(side='left')
 
     def _build_historial(self, parent):
+        """Lista de ventas de contingencia ya registradas."""
         card = tk.Frame(parent, bg=COLORES['fondo_card'],
                         highlightbackground=COLORES['borde'], highlightthickness=1)
         card.pack(fill='both', expand=True, padx=16, pady=(4, 16))

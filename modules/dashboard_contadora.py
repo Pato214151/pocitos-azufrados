@@ -63,6 +63,7 @@ def _blend_hex(c1, c2, t):
 
 
 class DashboardContadora:
+    """Ventana principal de la contadora: módulos financieros y KPIs."""
     def __init__(self, root, usuario):
         self.root = root
         self.usuario = usuario
@@ -648,6 +649,7 @@ class DashboardContadora:
     # ─── DASHBOARD HOME ───────────────────────────────────────────────────────
 
     def _cargar_dashboard(self):
+        """Pinta el inicio: KPIs del día/mes, gráficas y productos más vendidos."""
         self._limpiar_contenido()
         self._marcar_menu('Dashboard')
 
@@ -1219,6 +1221,7 @@ class DashboardContadora:
         self._programar_verificacion_bloqueo()
 
     def _bloquear_pantalla(self):
+        """Bloquea la pantalla tras un tiempo sin uso; se desbloquea con PIN."""
         if self._bloqueo_activo:
             return
         self._bloqueo_activo = True

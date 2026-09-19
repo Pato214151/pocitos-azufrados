@@ -15,6 +15,7 @@ from database.connection import get_connection, conexion_segura
 
 
 class ReportesModule:
+    """Pantalla de reportes: ventas, ingresos vs gastos y exportación a Excel."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario

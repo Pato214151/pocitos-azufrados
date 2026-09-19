@@ -16,6 +16,7 @@ from database.connection import conexion_segura
 
 
 class MovimientosModule:
+    """Panel de movimientos con pestañas: resumen, ingresos, egresos, caja y reportes."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -52,6 +53,7 @@ class MovimientosModule:
         self._render_resumen(frame)
 
     def _render_resumen(self, frame):
+        """Pinta el resumen financiero del período."""
         canvas = tk.Canvas(frame, bg=COLORES['fondo'], highlightthickness=0)
         scroll = ttk.Scrollbar(frame, orient='vertical', command=canvas.yview)
         inner = tk.Frame(canvas, bg=COLORES['fondo'])
@@ -178,6 +180,7 @@ class MovimientosModule:
         self._render_graficas(frame)
 
     def _render_graficas(self, frame):
+        """Dibuja las gráficas de ventas de 7 días y por método de pago."""
         # Canvas scrollable
         canvas = tk.Canvas(frame, bg=COLORES['fondo'], highlightthickness=0)
         scroll = ttk.Scrollbar(frame, orient='vertical', command=canvas.yview)

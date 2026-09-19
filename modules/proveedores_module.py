@@ -34,6 +34,7 @@ def _leer_metodos_pago():
 
 
 class ProveedoresModule:
+    """Pantalla de proveedores: lista, ficha, compras y saldo por pagar."""
     def __init__(self, parent, usuario):
         self.parent = parent
         self.usuario = usuario
@@ -48,6 +49,7 @@ class ProveedoresModule:
     # INTERFAZ
     # ------------------------------------------------------------------
     def _crear_interfaz(self):
+        """Arma la pantalla: KPIs, buscador, tabla y panel de ficha."""
         header = tk.Frame(self.parent, bg=COLORES['primario'])
         header.pack(fill='x')
 
@@ -202,6 +204,7 @@ class ProveedoresModule:
     # FICHA
     # ------------------------------------------------------------------
     def _mostrar_ficha(self, prov):
+        """Muestra los datos y compras del proveedor elegido."""
         for w in self.right.winfo_children():
             w.destroy()
 
@@ -332,6 +335,7 @@ class ProveedoresModule:
     # ACCIONES
     # ------------------------------------------------------------------
     def _registrar_compra(self, prov):
+        """Formulario para registrar una compra al proveedor."""
         dlg = tk.Toplevel(self.parent)
         dlg.title(f"Registrar Compra - {prov['nombre']}")
         dlg.geometry("420x340")
@@ -439,6 +443,7 @@ class ProveedoresModule:
         self._abrir_form(prov)
 
     def _abrir_form(self, prov=None):
+        """Formulario para crear o editar un proveedor."""
         es_nuevo = prov is None
         titulo = "Nuevo Proveedor" if es_nuevo else f"Editar: {prov['nombre']}"
 
