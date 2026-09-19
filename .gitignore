@@ -34,3 +34,5 @@ build/
 *.swp
 
 CLAUDE.md
+
+.claude/

@@ -204,7 +204,7 @@ que ejecute el mismo `CREATE TABLE` de `setup.py` (o leer el DDL desde un archiv
 **Archivos:** `cocina_module.py:_cargar_pedidos()` y posibles usos dispersos.
 
 **Impacto:** `get_connection()` no usa context manager, requiere `try/finally conn.close()`
-manual. Si el bloque `finally` falla o se omite, la conexión queda abierta. CLAUDE.md lo
+manual. Si el bloque `finally` falla o se omite, la conexión queda abierta. La guía interna lo
 documenta como anti-patrón con una sola excepción aceptada (`cocina_module`). Verificar que
 no haya otros usos no documentados.
 
