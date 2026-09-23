@@ -6,7 +6,7 @@
 ![Flask](https://img.shields.io/badge/Cocina-Flask%20%2B%20Waitress-000?logo=flask)
 ![pytest](https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white)
 
-Sistema de punto de venta de escritorio para el bar y restaurante de un club recreativo: ventas, caja diaria, inventario, cocina, nómina y reportes. Funciona **sin internet y sin servidor externo**.
+Sistema de punto de venta de escritorio que el bar y restaurante de un club recreativo usa todos los días: ventas, caja diaria, inventario, cocina, nómina y reportes. Funciona **sin internet y sin servidor externo**.
 
 ---
 
@@ -64,3 +64,24 @@ python sim_dia_completo.py # simula un día completo de operación y valida la i
 - El repositorio **no incluye** la base de datos, los respaldos, los recibos ni los secretos: están en `.gitignore`.
 - `_licencia_secret.py` es local; el repositorio solo trae [`_licencia_secret.example.py`](_licencia_secret.example.py) con un valor vacío.
 - Contraseñas y PIN con bcrypt, bloqueo automático de pantalla por inactividad y autenticación HTTP Basic en el servidor web de cocina.
+
+---
+
+## Lo que salió mal (y cómo lo arreglé)
+
+> El club lo usa todos los días en el bar y la cocina, y la página web del club (carpeta `pagina pocitos/`) supera las 6.000 visualizaciones cada 28 días. Estos son los problemas que más me enseñaron.
+
+**Dos cajeros, el mismo número de recibo.**
+En un bar lleno, dos cajeros pueden vender en el mismo segundo. Sin control, los dos podían sacar el mismo número de comprobante. Puse un bloqueo por serie para que la numeración sea consecutiva aunque haya ventas simultáneas.
+
+**Una venta a medias.**
+Si algo fallaba en la mitad de una venta, podía quedar registrado el cobro sin el descuento del inventario, o al revés. Ahora cada venta es una transacción atómica: o se guarda todo o no se guarda nada.
+
+**Los PIN estaban en texto plano.**
+En una revisión de seguridad encontré que los PIN de los usuarios se guardaban tal cual. Hice una migración que, al arrancar, convierte los PIN existentes a hash con bcrypt, sin que nadie tenga que volver a crear su usuario.
+
+**Errores que desaparecían.**
+Revisando el código encontré muchos `except Exception: pass` dentro de operaciones de venta, caja y cocina. Eso significa que si algo fallaba, el sistema seguía como si nada y no quedaba rastro. Lo documenté como deuda técnica con archivo y línea, y el plan es reemplazar cada uno por un registro en el log. Todavía no está terminado y lo digo así.
+
+**Un método de pago que no aparecía.**
+Había cuatro listas de métodos de pago escritas a mano en cuatro módulos distintos. En una faltaba Bancolombia. Lo corregí y dejé documentado que la solución de fondo es tener una sola fuente de verdad.
